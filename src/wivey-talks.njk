@@ -1,0 +1,36 @@
+---
+layout: base.njk
+title: Wivey Talks
+description: A programme of talks on subjects of general and community interest in Wiveliscombe.
+---
+
+<section class="section flow">
+  <h1>Wivey Talks</h1>
+
+  <p>All talks are at St Andrew's Church, Wiveliscombe and start at 7:30pm. Doors open 7:00pm.</p>
+
+  <p>Admission free to members with annual subscriptions of &pound;12 per person or &pound;16 for two people at the same address. Visitors &pound;5.</p>
+
+  <h2>Upcoming Talks</h2>
+
+  <div class="stack">
+    {% for event in events %}
+    <article class="media">
+      <div>
+        <h3><a href="/wivey-talks/{{ event.id }}/">{{ event.title }}</a></h3>
+        <p>{{ event.description }}</p>
+        <p>
+          <strong>
+            {%- set d = event.date.split('-') -%}
+            {{- d[2] }}/{{ d[1] }}/{{ d[0] -}}
+          </strong>
+          &mdash; {{ event.time }}
+          {% if event.speaker %} &mdash; {{ event.speaker }}{% endif %}
+          {% if event.speakerRole %} ({{ event.speakerRole }}){% endif %}
+        </p>
+        <a href="/wivey-talks/{{ event.id }}/">More details</a>
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+</section>

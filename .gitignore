@@ -1,0 +1,13 @@
+node_modules/
+dist/
+.eleventy.cache
+.DS_Store
+*.log
+*.lc
+*.map
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+*~

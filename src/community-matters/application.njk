@@ -1,0 +1,48 @@
+---
+pagination:
+  data: applications
+  size: 1
+  alias: app
+permalink: /community-matters/{{ app.id }}/
+layout: article.njk
+eleventyComputed:
+  title: "{{ app.title }}"
+  description: "{{ app.title }} — Ref: {{ app.reference }}. {{ app.address }}. Status: {{ app.status }}"
+---
+
+<h1>{{ app.title }}</h1>
+
+<dl class="application-meta">
+  <dt>Reference</dt>
+  <dd>{{ app.reference }}</dd>
+
+  <dt>Address</dt>
+  <dd>{{ app.address }}</dd>
+
+  <dt>Status</dt>
+  <dd>{{ app.status }}</dd>
+
+  <dt>Submitted</dt>
+  <dd>
+    {%- set d = app.submitted.split('-') -%}
+    {{- d[2] }}/{{ d[1] }}/{{ d[0] -}}
+  </dd>
+</dl>
+
+<h2>Description</h2>
+<p>{{ app.description }}</p>
+
+{% if app.representation %}
+<h2>WCHS Representation</h2>
+<p>{{ app.representation }}</p>
+{% endif %}
+
+{% if app.tags.length %}
+<p class="cluster">
+  {% for tag in app.tags %}
+  <span class="tag">{{ tag }}</span>
+  {% endfor %}
+</p>
+{% endif %}
+
+<p style="margin-block-start: var(--space-lg);"><a href="/community-matters/">&larr; Back to all applications</a></p>

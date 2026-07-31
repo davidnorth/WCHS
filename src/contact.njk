@@ -1,0 +1,56 @@
+---
+layout: base.njk
+title: Contact
+description: Get in touch with the Wiveliscombe Civic Society.
+---
+
+<section class="section flow">
+  <h1>Contact us</h1>
+
+  <p>For general information, please contact our chair, <strong>Pauline Homeshaw</strong> on <a href="tel:01984624564">01984 624564</a> or at <a href="mailto:homeshaw@btopenworld.com">homeshaw@btopenworld.com</a>.</p>
+
+  <h2>Enquiry form</h2>
+  <p>For more detailed enquiries, please use this form.</p>
+
+  <form class="contact-form" action="#">
+    <div class="field">
+      <label for="name">Name</label>
+      <input id="name" name="name" type="text" required autocomplete="name" aria-describedby="name-hint">
+      <small class="field-hint" id="name-hint">Your full name.</small>
+    </div>
+
+    <div class="field">
+      <label for="email">Email</label>
+      <input id="email" name="email" type="email" required autocomplete="email" aria-describedby="email-hint">
+      <small class="field-hint" id="email-hint">We'll never share your address.</small>
+    </div>
+
+    <div class="field">
+      <label for="subject">Subject</label>
+      <select id="subject" name="subject" required aria-describedby="subject-hint">
+        <option value="">Select a subject&hellip;</option>
+        <option value="membership">Membership enquiry</option>
+        <option value="planning">Planning application</option>
+        <option value="talks">Wivey Talks</option>
+        <option value="general">General enquiry</option>
+      </select>
+      <small class="field-hint" id="subject-hint">Choose the topic that best fits.</small>
+    </div>
+
+    <div class="field">
+      <label for="message">Message</label>
+      <textarea id="message" name="message" required rows="5" aria-describedby="message-hint"></textarea>
+      <small class="field-hint" id="message-hint">Anything you'd like us to know.</small>
+    </div>
+
+    <div class="field">
+      <input id="consent" name="consent" type="checkbox" required aria-describedby="consent-hint">
+      <label for="consent">I consent to being contacted regarding this enquiry</label>
+      <small class="field-hint" id="consent-hint">Required to submit the form.</small>
+    </div>
+
+    <div>
+      <button class="button" type="submit">Send message</button>
+    </div>
+  </form>
+</section>

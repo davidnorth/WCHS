@@ -1,0 +1,42 @@
+---
+layout: base.njk
+title: Community Matters
+description: Monitoring and commenting on significant planning applications in Wiveliscombe.
+---
+
+<section class="section flow">
+  <h1>Community Matters</h1>
+
+  <section class="flow">
+    <h2>Our Built Environment</h2>
+
+    <p>Our aim is to work closely with our Town Council and Unitary Council to monitor, and, where necessary, comment on significant planning applications.</p>
+
+    <p>Listed below are current planning applications within Wiveliscombe that we hope the community will appreciate being aware of.</p>
+  </section>
+
+  <section class="flow">
+    <h2>Current Applications</h2>
+
+    <div class="stack">
+      {% for app in applications %}
+      <article class="card">
+        <h3><a href="/community-matters/{{ app.id }}/">{{ app.title }}</a></h3>
+        <p>{{ app.address }}</p>
+        <p>{{ app.description }}</p>
+        <p class="cluster" style="gap: var(--space-xs);">
+          <strong>Ref:</strong> {{ app.reference }}
+          <span>&middot;</span>
+          <strong>Status:</strong> {{ app.status }}
+        </p>
+        {% if app.representation %}
+        <p style="font-size: var(--text-sm); border-inline-start: 4px solid var(--color-brand-300); padding-inline-start: var(--space-sm);">
+          <strong>WCHS representation:</strong> {{ app.representation }}
+        </p>
+        {% endif %}
+        <a href="/community-matters/{{ app.id }}/">More details</a>
+      </article>
+      {% endfor %}
+    </div>
+  </section>
+</section>
