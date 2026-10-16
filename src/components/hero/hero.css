@@ -34,3 +34,62 @@
     }
   }
 }
+
+/* hero-cover: full-bleed photo band with the hero content on top.
+   Not a .section: the absolutely positioned image needs the band itself
+   as its containing block (grid areas would trap it in the content column). */
+.hero-cover {
+  grid-column: full;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-block-size: clamp(26rem, 60svh, 42rem);
+  overflow: hidden;
+
+  & > img {
+    position: absolute;
+    inset: 0;
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+    object-position: 50% 55%;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(90deg,
+        oklch(23% 0.07 30 / 0.80) 0%,
+        oklch(23% 0.07 30 / 0.45) 55%,
+        oklch(23% 0.07 30 / 0.18) 100%),
+      linear-gradient(180deg,
+        oklch(23% 0.07 30 / 0) 45%,
+        oklch(23% 0.07 30 / 0.35) 100%);
+  }
+
+  & > .hero {
+    position: relative;
+    z-index: 1;
+    inline-size: min(var(--content-max), 100% - 2 * var(--space-md));
+    margin-inline: auto;
+    padding-block: var(--space-xl);
+
+    & > .eyebrow { color: var(--color-brand-100); }
+    & > h1 { color: oklch(100% 0 0); }
+    & > .lede { color: var(--color-brand-100); }
+  }
+
+  & .button[data-variant="secondary"] {
+    color: oklch(100% 0 0);
+    border-color: oklch(100% 0 0 / 0.65);
+
+    &:hover {
+      background: oklch(100% 0 0 / 0.14);
+      color: oklch(100% 0 0);
+      border-color: oklch(100% 0 0);
+    }
+  }
+}

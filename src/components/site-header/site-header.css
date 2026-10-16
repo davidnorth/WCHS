@@ -1,11 +1,12 @@
 .site-header {
+  padding: var(--space-md) 0;
+  background: var(--color-brand-600);
   display: grid;
   grid-template-columns:
     minmax(var(--space-md), 1fr)
     minmax(0, var(--content-max))
     minmax(var(--space-md), 1fr);
   border-block-end: 1px solid var(--color-border);
-  background: var(--color-surface);
   position: sticky;
   top: 0;
   z-index: 20;
@@ -20,9 +21,14 @@
   }
 
   & .site-logo {
-    font-size: var(--text-lg);
-    font-weight: 700;
+    display: block;
     text-decoration: none;
-    color: var(--color-text);
+
+    & img {
+      display: block;
+      width: 210px;
+      max-width: 100%;
+      height: auto;
+    }
   }
 }
