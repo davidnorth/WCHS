@@ -12,7 +12,21 @@ description: Get in touch with the Wiveliscombe Civic Society.
   <h2>Enquiry form</h2>
   <p>For more detailed enquiries, please use this form.</p>
 
-  <form class="contact-form" action="#">
+  <form
+    class="contact-form"
+    name="contact"
+    method="POST"
+    data-netlify="true"
+    netlify-honeypot="bot-field"
+    action="/contact/thanks/"
+  >
+    <input type="hidden" name="form-name" value="contact">
+
+    <p class="visually-hidden">
+      <label for="bot-field">Leave this field empty</label>
+      <input id="bot-field" name="bot-field" type="text" tabindex="-1" autocomplete="off">
+    </p>
+
     <div class="field">
       <label for="name">Name</label>
       <input id="name" name="name" type="text" required autocomplete="name" aria-describedby="name-hint">
@@ -44,9 +58,9 @@ description: Get in touch with the Wiveliscombe Civic Society.
     </div>
 
     <div class="field">
-      <input id="consent" name="consent" type="checkbox" required aria-describedby="consent-hint">
+      <input id="consent" name="consent" type="checkbox" value="yes" required aria-describedby="consent-hint">
       <label for="consent">I consent to being contacted regarding this enquiry</label>
-      <small class="field-hint" id="consent-hint">Required to submit the form.</small>
+      <small class="field-hint" id="consent-hint">Required to submit the form. Read our <a href="/privacy/">privacy notice</a>.</small>
     </div>
 
     <div>
