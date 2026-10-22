@@ -13,21 +13,31 @@ description: A programme of talks on subjects of general and community interest 
 
   <h2>Upcoming Talks</h2>
 
-  <div class="stack">
+  <div class="talk-list">
     {% for event in events %}
-    <article class="media">
+    <article>
+      <img
+        src="{{ event.image }}-800.jpg"
+        srcset="{{ event.image }}-400.jpg 400w,
+                {{ event.image }}-800.jpg 800w,
+                {{ event.image }}-1200.jpg 1200w"
+        sizes="(min-width: 60rem) 18rem, (min-width: 40rem) 30vw, 100vw"
+        width="1200" height="900"
+        alt=""
+        loading="lazy">
       <div>
-        <h3><a href="/wivey-talks/{{ event.id }}/">{{ event.title }}</a></h3>
-        <p>{{ event.description }}</p>
         <p>
-          <strong>
+          <time datetime="{{ event.date }}">
             {%- set d = event.date.split('-') -%}
             {{- d[2] }}/{{ d[1] }}/{{ d[0] -}}
-          </strong>
+          </time>
           &mdash; {{ event.time }}
-          {% if event.speaker %} &mdash; {{ event.speaker }}{% endif %}
-          {% if event.speakerRole %} ({{ event.speakerRole }}){% endif %}
         </p>
+        <h3><a href="/wivey-talks/{{ event.id }}/">{{ event.title }}</a></h3>
+        <p>{{ event.description }}</p>
+        {% if event.speaker %}
+        <p>With <strong>{{ event.speaker }}</strong>{% if event.speakerRole %}, {{ event.speakerRole }}{% endif %}</p>
+        {% endif %}
         <a href="/wivey-talks/{{ event.id }}/">More details</a>
       </div>
     </article>

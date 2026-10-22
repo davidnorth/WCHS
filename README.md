@@ -12,6 +12,12 @@ npm run build    # build to dist/
 
 The site builds to `dist/`. CSS is bundled and minified by lightningcss during the build.
 
+## Talk images
+
+Talk images are static files in `src/images/talks/`. They are copied to `dist/images/talks/` and served from Netlify's CDN alongside the rest of the site.
+
+Each talk in `src/_data/events.js` stores a base image path. The templates request `-400.jpg`, `-800.jpg`, and `-1200.jpg` variants of that path. The checked-in images are brand-coloured placeholders; replace them with real photos using the same filenames, or update the base path in the event data.
+
 ## Netlify deployment
 
 The build settings live in `netlify.toml`:

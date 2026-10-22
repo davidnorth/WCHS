@@ -1,3 +1,6 @@
+// Talk images are static files in src/images/talks/. Each talk points at a
+// base path; the templates request <base>-{400,800,1200}.jpg at each size.
+// Placeholder images are checked in until real photos are available.
 export default [
   {
     id: "youth-community-power",
@@ -7,6 +10,7 @@ export default [
     speaker: "Nick Harvey",
     speakerRole: "Charity Manager, In the Mix",
     description: "What youth work is, what it means and supporting young people to thrive.",
+    image: "/images/talks/youth-community-power",
     tags: ["youth", "community"],
   },
   {
@@ -17,6 +21,7 @@ export default [
     speaker: "Rebecca Randall",
     speakerRole: "Chartered Planner, Polden Planning",
     description: "Rebecca considers the challenges and opportunities of new housing and employment in the area and how the community can work with the planning system to achieve positive change and local benefits.",
+    image: "/images/talks/positive-planning",
     tags: ["planning", "development"],
   },
   {
@@ -27,6 +32,7 @@ export default [
     speaker: "Professor James Clark",
     speakerRole: "Exeter University",
     description: "Prof. Clark discusses Henry VIII's survey of 16th century England & Wales and the unique view it offers of the Tudor West Country.",
+    image: "/images/talks/tudor-doomsday",
     tags: ["history", "tudor"],
   },
   {
@@ -37,6 +43,7 @@ export default [
     speaker: "Bob Croft & Simon French",
     speakerRole: "Archaeologist & Exmoor Ales",
     description: "Bob & Simon review Wivey's brewing history and the challenges facing modern brewers. Exmoor ales will be available.",
+    image: "/images/talks/wivey-brewing-christmas",
     tags: ["history", "brewing", "christmas"],
   },
   {
@@ -47,6 +54,7 @@ export default [
     speaker: "Julian White",
     speakerRole: "Author, Abbotsfield Resident",
     description: "This historic building is home to a thriving residential community and has a fascinating history. Julian dips into his book on the subject.",
+    image: "/images/talks/secrets-abbotsfield",
     tags: ["history", "architecture"],
   },
   {
@@ -57,6 +65,7 @@ export default [
     speaker: "Rob Wilson-North",
     speakerRole: "ENPA",
     description: "What is Exmoor and what is its future? Rob leads us through the rollercoaster story of Exmoor over 8000 years and anticipates possible challenges.",
+    image: "/images/talks/exmoor-national-park",
     tags: ["landscape", "history"],
   },
   {
@@ -67,6 +76,7 @@ export default [
     speaker: "Naomi Griffith",
     speakerRole: "Director, Onion Collective",
     description: "Naomi describes the long journey towards creating and operating East Quay.",
+    image: "/images/talks/east-quay-watchet",
     tags: ["culture", "regeneration"],
   },
   {
@@ -77,6 +87,7 @@ export default [
     speaker: "Marion Pollinger",
     speakerRole: "",
     description: "Marion shares her grandfather's memories of a life in a German prisoner of war camp during WWII. Pictures and recordings of him bring his stories to life.",
+    image: "/images/talks/sgt-harry-brett",
     tags: ["history", "WWII"],
   },
   {
@@ -87,6 +98,7 @@ export default [
     speaker: "Tom Mayberry",
     speakerRole: "",
     description: "Tom guides us through the rich diversity of medieval and later parish churches in one of the West Country's most memorable regions.",
+    image: "/images/talks/churches-west-somerset",
     tags: ["history", "architecture"],
   },
 ];

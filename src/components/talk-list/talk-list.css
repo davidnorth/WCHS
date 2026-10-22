@@ -1,0 +1,84 @@
+/* talk-list: a list of talk entries. Each <article> has a thumbnail and a
+   text block. The thumbnail sits above the text on narrow containers and to
+   the right on wide ones. */
+.talk-list {
+  display: grid;
+  container-type: inline-size;
+
+  & > article {
+    display: grid;
+    gap: var(--space-md);
+    padding-block: var(--space-md);
+    border-block-start: 1px solid var(--color-border);
+
+    &:first-child {
+      border-block-start: 0;
+      padding-block-start: 0;
+    }
+  }
+
+  & > article > img {
+    inline-size: 100%;
+    block-size: auto;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    border-radius: var(--radius-md);
+    background: var(--color-surface-light);
+  }
+
+  & > article > div {
+    display: grid;
+    gap: var(--space-sm);
+    align-content: start;
+  }
+
+  & > article > div > p {
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+  }
+
+  & > article > div > p > time {
+    color: var(--color-brand-600);
+    font-weight: 600;
+  }
+
+  & > article > div > h3 {
+    font-size: var(--text-lg);
+    line-height: 1.3;
+
+    & a {
+      text-decoration: none;
+
+      &:hover { text-decoration: underline; }
+    }
+  }
+
+  & > article > div > p > strong {
+    color: var(--color-text);
+    font-weight: 600;
+  }
+
+  & > article > div > a {
+    font-size: var(--text-sm);
+    font-weight: 600;
+  }
+
+  @container (min-width: 36rem) {
+    & > article {
+      grid-template-columns: minmax(0, 1fr) clamp(11rem, 30%, 18rem);
+      align-items: start;
+      gap: var(--space-lg);
+    }
+
+    & > article > img {
+      grid-column: 2;
+      grid-row: 1;
+      aspect-ratio: 4 / 3;
+    }
+
+    & > article > div {
+      grid-column: 1;
+      grid-row: 1;
+    }
+  }
+}
