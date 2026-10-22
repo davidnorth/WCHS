@@ -1,6 +1,6 @@
 # Wiveliscombe Civic and Historical Society
 
-Static site built with [11ty](https://www.11ty.dev/), deployed on Netlify.
+Static site built with [11ty](https://www.11ty.dev/), deployed on Cloudflare as a Worker with static assets.
 
 ## Local development
 
@@ -14,87 +14,105 @@ The site builds to `dist/`. CSS is bundled and minified by lightningcss during t
 
 ## Talk images
 
-Talk images are static files in `src/images/talks/`. They are copied to `dist/images/talks/` and served from Netlify's CDN alongside the rest of the site.
+Talk images are static files in `src/images/talks/`. They are copied to `dist/images/talks/` and served from Cloudflare's CDN alongside the rest of the site.
 
 Each talk in `src/_data/events.js` stores a base image path. The templates request `-400.jpg`, `-800.jpg`, and `-1200.jpg` variants of that path: the talks list uses them as thumbnails, and talk detail pages use them as a large hero image. The checked-in images are brand-coloured placeholders; replace them with real photos using the same filenames, or update the base path in the event data.
 
-## Netlify deployment
+## Deployment
 
-The build settings live in `netlify.toml`:
+The build and deploy configuration lives in `wrangler.jsonc`:
 
-- Build command: `npm run build`
-- Publish directory: `dist`
-- Node version: 22
+- `name`: `wchs`
+- `assets.directory`: `./dist`
+- `assets.not_found_handling`: `404-page`, so unknown URLs get the generated `dist/404.html`
 
-Pushing to `main` triggers a production deploy. Pushes to other branches create deploy previews, which do not consume production-deploy credits.
+Without `assets.directory`, Cloudflare infers a directory from the framework preset and will look for `_site`, which this project does not build.
 
 ### First-time setup
 
-1. In Netlify, create a new site from Git and select the `davidnorth/WCHS` repository.
-2. Set the production branch to `main`. The build command and publish directory are read from `netlify.toml`.
-3. **Before the first deploy**, go to **Forms → Enable form detection**. Form detection only takes effect on the next deploy.
-4. Deploy the site.
-5. Confirm the `contact` form appears under **Forms**.
-6. Add a notification: **Forms → Submission notifications → Add notification → Email**, using the chair's address.
+1. In the Cloudflare dashboard go to **Workers & Pages → Create application → Connect to Git**. Do not use the "Continue to Pages" link: this project uses the Workers static-assets workflow, not the legacy Pages one.
+2. Select the repository, then set:
+   - Project name: `wchs`
+   - Production branch: `main`
+   - Build command: `npm run build`
+   - Deploy command: `npx wrangler deploy` (the default)
+   - Root directory: leave blank
+3. Add an environment variable `NODE_VERSION` set to `22`. The repo also contains `.nvmrc`, but the environment variable is what Cloudflare reads first.
+4. Deploy. The site is served at `https://wchs.<account-subdomain>.workers.dev`.
+5. Put that URL in `site.url` in `src/_data/site.js` and redeploy. It is used for the Open Graph image and the contact form's redirect.
 
-The contact form is a normal HTML form. Netlify detects it at deploy time, stores submissions, filters spam with Akismet, and applies the `netlify-honeypot` field before the form is served.
+Pushing to `main` deploys to production. Pushes to other branches create preview deployments with their own URLs, so work in progress does not change the live site.
 
 ### Test checklist
 
-After the first deploy, run through these:
+After a deploy, run through these:
 
-- [ ] Submit a genuine test enquiry using a real email address and full sentences. Test submissions such as `test@test.com` are more likely to be flagged as spam.
-- [ ] Confirm the submission appears under **Forms → contact → Verified submissions**.
-- [ ] If it does not appear, check the **Spam submissions** list before assuming the form is broken.
-- [ ] Confirm the notification email arrives at the chair's address.
-- [ ] Reply to the notification and confirm it goes to the submitter, not `formresponses@netlify.com`.
+- [ ] Submit a genuine test enquiry with a real email address and full sentences. Test submissions such as `test@test.com` are more likely to be filtered as spam.
+- [ ] Confirm the notification email arrives at `homeshaw@btopenworld.com`.
+- [ ] Reply to the notification and confirm the reply goes to the submitter, not to Web3Forms.
 - [ ] Confirm submission redirects to `/contact/thanks/` and shows the branded thank-you page.
 - [ ] Check the thank-you page is not indexed: view source and confirm `<meta name="robots" content="noindex">`.
-- [ ] Fill the hidden `bot-field` using browser devtools and submit. The submission should be silently rejected.
+- [ ] Tick the hidden `botcheck` field using browser devtools and submit. The submission should be rejected and no email should arrive.
 - [ ] Confirm the privacy notice link in the form and footer opens `/privacy/`.
 - [ ] Check a non-existent URL returns the site's 404 page.
 
 ## Form handling
 
-- Form name: `contact`
-- Success page: `/contact/thanks/`
-- Fields: name, email, subject, message, consent
-- Spam protection: Akismet plus the `bot-field` honeypot
-- Notifications: configured in the Netlify UI, not in the repository
+The contact form posts directly to [Web3Forms](https://web3forms.com), which emails the submission to the society and redirects the visitor to `/contact/thanks/`. There is no server-side code in this repository.
 
-The form works without JavaScript. The notification email comes from `formresponses@netlify.com`; because the form includes an `email` field, replies go to the submitter. Ask the chair to mark that sender as not spam.
+- Endpoint: `https://api.web3forms.com/submit`
+- Success page: `/contact/thanks/`, set by the hidden `redirect` field
+- Fields: `name`, `email`, `Enquiry type`, `message`, `consent`
+- Hidden fields: `access_key`, `subject`, `from_name`, `redirect`
+- Spam protection: Web3Forms' server-side filtering plus the hidden `botcheck` honeypot
 
-Netlify Forms are free and unlimited on credit-based plans.
+The access key lives in `src/_data/forms.js`. It is a public identifier, not a secret, and is visible in the page source. It only allows posting to this one form.
 
-## Free-plan usage
+### One-time setup
 
-New Netlify accounts are credit-based:
+1. Create an account at [web3forms.com](https://web3forms.com) using `homeshaw@btopenworld.com`. On the free plan this address is the notification recipient.
+2. Create a form named `contact` and copy its access key into `src/_data/forms.js`.
+3. Confirm the form's **Reply-To** setting resolves to the submitter's address. The form has an `email` field, which Web3Forms uses by default.
+4. Set **Data Retention** for the form to **7 days**, so stored submissions match the privacy notice.
 
-- 300 credits per month, hard limit
-- Production deploy: 15 credits
-- Bandwidth: 20 credits per GB
-- Form submissions: free
+### How it works without JavaScript
 
-At roughly one production deploy a month, the site uses very little of the allowance. Use branches for work in progress so previews stay free, and only merge to `main` when ready to publish.
+The form is a plain HTML `POST` and works with JavaScript disabled. Because the submit button is a normal form submit, the browser follows Web3Forms' redirect to the thank-you page.
 
-If the credit balance reaches zero, Netlify pauses all sites on the account until the next monthly reset.
+Submitting the form locally with `npm run dev` also works, but the redirect is an absolute URL, so you will land on the deployed thank-you page rather than the local one. That is expected.
+
+### Spam and abuse
+
+Free-plan spam protection is server-side filtering plus the `botcheck` honeypot. The access key is public, so in principle someone could post junk to it. Watch for Web3Forms' warning email at 90% of the 250 monthly submissions. If abuse becomes a problem, either upgrade to Pro (which adds domain restriction and Cloudflare Turnstile) or put a small Worker in front of the form to hide the key and rate-limit requests.
+
+## Free plan limits
+
+Cloudflare's free plan has no bandwidth or request limit for static assets. The relevant limits are:
+
+- 3,000 build minutes per month, 1 concurrent build
+- 100,000 Worker requests per day (not used: there is no Worker script, only assets)
+- 20,000 files per deployment
+
+At roughly one deploy a month, this site uses a negligible share of the allowance. Both the Workers and legacy Pages workflows are free at this scale.
+
+Web3Forms' free plan allows 250 submissions per month and keeps 30 days of dashboard history. Stored submissions are deleted after the retention period you configure.
 
 ## Privacy and retention
 
-The privacy notice at `/privacy/` states that enquiry details are kept for **three months**.
+The privacy notice at `/privacy/` commits to deleting stored submissions after **seven days** at Web3Forms and to deleting the email copy after **three months**.
 
-This is an operational task, not something the build enforces: periodically open **Forms → contact** in Netlify, export anything that needs keeping, and delete submissions older than three months.
+The seven-day limit is a Web3Forms setting under **Data Retention**; set it once when the form is created. The three-month limit is an operational task, not something the build enforces: periodically delete enquiries older than three months from the chair's mailbox.
 
 ## Domain
 
-The domain is still to be confirmed. `https://wiveliscombecivic.org.uk` is currently used as a placeholder in `src/_data/site.js` but does not resolve.
+The domain is still to be confirmed. `wiveliscombecivic.org.uk` is the preferred choice but is not registered, so `site.url` currently points at the `workers.dev` address.
 
 When the domain is ready:
 
-1. Add it in Netlify under **Domain management**.
-2. Choose the primary domain (apex or `www`) and redirect the other.
-3. Netlify provisions TLS automatically.
-4. Update `site.url` in `src/_data/site.js` so canonical and Open Graph URLs are correct.
-5. Redeploy.
+1. Add the domain as a zone in the same Cloudflare account.
+2. In the Worker, go to **Settings → Domains & Routes → Add custom domain** and add the apex or `www` hostname.
+3. Redirect the other hostname to the primary one.
+4. Update `site.url` in `src/_data/site.js`, which also fixes the contact form's redirect URL.
+5. Redeploy and confirm HTTPS works.
 
-Until then, the `*.netlify.app` URL is the live site.
+Cloudflare provisions TLS automatically. The `workers.dev` address stays available afterwards.

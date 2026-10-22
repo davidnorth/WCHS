@@ -17,17 +17,17 @@ description: Get in touch with the Wiveliscombe Civic Society.
 
   <form
     class="contact-form"
-    name="contact"
     method="POST"
-    data-netlify="true"
-    netlify-honeypot="bot-field"
-    action="/contact/thanks/"
+    action="https://api.web3forms.com/submit"
   >
-    <input type="hidden" name="form-name" value="contact">
+    <input type="hidden" name="access_key" value="{{ forms.web3formsKey }}">
+    <input type="hidden" name="subject" value="Website enquiry">
+    <input type="hidden" name="from_name" value="{{ site.name }}">
+    <input type="hidden" name="redirect" value="{{ site.url }}/contact/thanks/">
 
     <p class="visually-hidden">
-      <label for="bot-field">Leave this field empty</label>
-      <input id="bot-field" name="bot-field" type="text" tabindex="-1" autocomplete="off">
+      <label for="botcheck">Leave this field empty</label>
+      <input id="botcheck" name="botcheck" type="checkbox" tabindex="-1" autocomplete="off">
     </p>
 
     <div class="field">
@@ -43,15 +43,15 @@ description: Get in touch with the Wiveliscombe Civic Society.
     </div>
 
     <div class="field">
-      <label for="subject">Subject</label>
-      <select id="subject" name="subject" required aria-describedby="subject-hint">
-        <option value="">Select a subject&hellip;</option>
-        <option value="membership">Membership enquiry</option>
-        <option value="planning">Planning application</option>
-        <option value="talks">Wivey Talks</option>
-        <option value="general">General enquiry</option>
+      <label for="enquiry-type">Enquiry type</label>
+      <select id="enquiry-type" name="Enquiry type" required aria-describedby="enquiry-type-hint">
+        <option value="">Select a type&hellip;</option>
+        <option value="Membership enquiry">Membership enquiry</option>
+        <option value="Planning application">Planning application</option>
+        <option value="Wivey Talks">Wivey Talks</option>
+        <option value="General enquiry">General enquiry</option>
       </select>
-      <small class="field-hint" id="subject-hint">Choose the topic that best fits.</small>
+      <small class="field-hint" id="enquiry-type-hint">Choose the topic that best fits.</small>
     </div>
 
     <div class="field">
