@@ -1,9 +1,9 @@
 export default {
   name: "Wiveliscombe Civic Society",
   description: "Informing, engaging and supporting the Wiveliscombe community since 1997.",
-  // Production URL. Update this when the custom domain is live; it also
-  // builds the contact form's redirect URL.
-  url: "https://wchs.davidnorth.workers.dev",
+  // Production URL. Also builds the contact form's redirect and the
+  // canonical and Open Graph URLs, so it must match the primary hostname.
+  url: "https://wiveliscombecivicsociety.org.uk",
   ogImage: "/img/og-default.png",
   nav: [
     { label: "Home", url: "/" },

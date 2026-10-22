@@ -39,7 +39,7 @@ Without `assets.directory`, Cloudflare infers a directory from the framework pre
    - Root directory: leave blank
 3. Add an environment variable `NODE_VERSION` set to `22`. The repo also contains `.nvmrc`, but the environment variable is what Cloudflare reads first.
 4. Deploy. The site is served at `https://wchs.<account-subdomain>.workers.dev`.
-5. Put that URL in `site.url` in `src/_data/site.js` and redeploy. It is used for the Open Graph image and the contact form's redirect.
+5. Set `site.url` in `src/_data/site.js` to the production URL (the `workers.dev` address, or the custom domain once it is attached) and redeploy. It builds the canonical, Open Graph and contact form redirect URLs.
 
 Pushing to `main` deploys to production. Pushes to other branches create preview deployments with their own URLs, so work in progress does not change the live site.
 
@@ -105,14 +105,15 @@ The seven-day limit is a Web3Forms setting under **Data Retention**; set it once
 
 ## Domain
 
-The domain is still to be confirmed. `wiveliscombecivic.org.uk` is the preferred choice but is not registered, so `site.url` currently points at the `workers.dev` address.
+The site runs at `https://wiveliscombecivicsociety.org.uk`. The domain is registered, its DNS zone sits in the same Cloudflare account as the Worker, and both the apex and `www` are attached as custom domains.
 
-When the domain is ready:
+- Primary hostname: the apex, `wiveliscombecivicsociety.org.uk`
+- `www` should 301 to the apex through a **Rules → Redirect Rules** entry. Until that rule exists both hostnames serve the site; the canonical link in each page points at the apex, so search engines still see one address.
+- `site.url` in `src/_data/site.js` must stay in sync with the primary hostname. It builds the canonical link, the Open Graph URLs and the contact form's redirect.
+- Enable **Always Use HTTPS** under **SSL/TLS → Edge Certificates**.
 
-1. Add the domain as a zone in the same Cloudflare account.
-2. In the Worker, go to **Settings → Domains & Routes → Add custom domain** and add the apex or `www` hostname.
-3. Redirect the other hostname to the primary one.
-4. Update `site.url` in `src/_data/site.js`, which also fixes the contact form's redirect URL.
-5. Redeploy and confirm HTTPS works.
+Because Web3Forms' free plan only allows same-domain redirects, change `site.url` in the same deploy as any hostname change, or the form's thank-you redirect will be refused.
 
-Cloudflare provisions TLS automatically. The `workers.dev` address stays available afterwards.
+Cloudflare provisions TLS automatically. The `workers.dev` address stays available afterwards; disable it in the Worker settings once the domain is established if you want a single public address.
+
+Optional: add **Email Routing** if the society wants an `@wiveliscombecivicsociety.org.uk` address. The contact form notification can keep going to the chair's existing mailbox.
