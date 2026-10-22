@@ -1,6 +1,14 @@
 ---
 layout: base.njk
 ---
-<article class="prose flow section">
-  {{ content | safe }}
+<article class="article-page">
+  <header class="hero" data-variant="page">
+    {% if heroEyebrow %}<span class="eyebrow">{{ heroEyebrow }}</span>{% endif %}
+    <h1>{{ title }}</h1>
+    {% if heroLede %}<p class="lede">{{ heroLede }}</p>{% endif %}
+  </header>
+
+  <div class="prose flow">
+    {{ content | safe }}
+  </div>
 </article>

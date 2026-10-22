@@ -1,0 +1,14 @@
+/* talk-hero: large image at the top of a talk detail page. */
+.talk-hero {
+  /* Keep the image's intrinsic width from widening the prose grid. */
+  min-inline-size: 0;
+
+  & > img {
+    inline-size: 100%;
+    block-size: auto;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    border-radius: var(--radius-md);
+    background: var(--color-surface-light);
+  }
+}

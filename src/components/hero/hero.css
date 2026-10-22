@@ -24,6 +24,11 @@
 
   & > .cluster { margin-block-start: var(--space-sm); }
 
+  &.text-center {
+    & > h1, & > .lede { margin-inline: auto; }
+    & > .cluster { justify-content: center; }
+  }
+
   &[data-layout="split"] {
     @container (min-width: 48rem) {
       grid-template-columns: 1fr 1fr;
@@ -33,6 +38,76 @@
       & > :not(img) { grid-column: 1; }
     }
   }
+
+  /* page: a short full-bleed header band for inner pages. The band bleeds to
+     the viewport edges, but subgrid keeps its content aligned with the page's
+     main column. Height is driven by the content, so a bare H1 stays compact. */
+  &[data-variant="page"] {
+    grid-column: full;
+    grid-template-columns: subgrid;
+    container-type: normal;
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    padding-block: var(--space-2xl);
+    background: var(--color-surface-lighter);
+    border-block-end: 1px solid var(--color-border);
+    align-self: start;
+    align-content: start;
+
+    & > :not(img) { grid-column: main; }
+
+    /* Drop an <img> into the band to use it as a background. The scrim and
+       reversed text below are then applied automatically. */
+    & > img {
+      position: absolute;
+      inset: 0;
+      inline-size: 100%;
+      block-size: 100%;
+      object-fit: cover;
+      z-index: -1;
+    }
+
+    &:has(> img) {
+      border-block-end-color: transparent;
+
+      &::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        background: var(--hero-scrim);
+      }
+
+      & > .eyebrow { color: var(--color-brand-100); }
+      & > h1 { color: oklch(100% 0 0); }
+      & > .lede { color: var(--color-brand-100); }
+
+      & .button[data-variant="secondary"] {
+        color: oklch(100% 0 0);
+        border-color: oklch(100% 0 0 / 0.65);
+
+        &:hover {
+          background: oklch(100% 0 0 / 0.14);
+          color: oklch(100% 0 0);
+          border-color: oklch(100% 0 0);
+        }
+      }
+    }
+  }
+}
+
+/* Shared scrim for photo heroes. */
+.hero-cover,
+.hero[data-variant="page"] {
+  --hero-scrim:
+    linear-gradient(90deg,
+      oklch(23% 0.07 30 / 0.80) 0%,
+      oklch(23% 0.07 30 / 0.45) 55%,
+      oklch(23% 0.07 30 / 0.18) 100%),
+    linear-gradient(180deg,
+      oklch(23% 0.07 30 / 0) 45%,
+      oklch(23% 0.07 30 / 0.35) 100%);
 }
 
 /* hero-cover: full-bleed photo band with the hero content on top.
@@ -60,14 +135,7 @@
     content: "";
     position: absolute;
     inset: 0;
-    background:
-      linear-gradient(90deg,
-        oklch(23% 0.07 30 / 0.80) 0%,
-        oklch(23% 0.07 30 / 0.45) 55%,
-        oklch(23% 0.07 30 / 0.18) 100%),
-      linear-gradient(180deg,
-        oklch(23% 0.07 30 / 0) 45%,
-        oklch(23% 0.07 30 / 0.35) 100%);
+    background: var(--hero-scrim);
   }
 
   & > .hero {

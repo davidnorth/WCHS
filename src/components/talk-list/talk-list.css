@@ -1,3 +1,16 @@
+/* talk-info: practical details above the programme.
+   The rule and extra space below separate the info from the talks themselves. */
+.talk-info {
+  display: grid;
+  gap: var(--space-sm);
+  padding-block-end: var(--space-lg);
+  border-block-end: 1px solid var(--color-border);
+}
+
+.talk-list-heading {
+  --flow-space: var(--space-xl);
+}
+
 /* talk-list: a list of talk entries. Each <article> has a thumbnail and a
    text block. The thumbnail sits above the text on narrow containers and to
    the right on wide ones. */

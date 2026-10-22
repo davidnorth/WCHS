@@ -74,6 +74,8 @@ a {
 .prose {
   display: grid;
   grid-template-columns: subgrid;
+  /* Keep short articles from stretching their rows to fill <main>. */
+  align-content: start;
   inline-size: 100%;
 
   & > * { grid-column: main; }

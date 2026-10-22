@@ -5,8 +5,14 @@ main {
     [main-start] minmax(0, var(--content-max))
     [main-end]   minmax(var(--space-md), 1fr) [full-end];
   row-gap: var(--space-2xl);
-  padding-block-start: 0;
+  padding-block-start: var(--space-2xl);
   padding-block-end: var(--space-2xl);
+
+  /* Full-bleed hero bands should sit flush against the masthead. Other pages
+     keep the top padding so a plain heading never butts up against it. */
+  &:has(> .hero-cover, > .hero[data-variant="page"], > .article-page) {
+    padding-block-start: 0;
+  }
 }
 
 .section {
@@ -22,4 +28,16 @@ main {
   }
 
   &[data-width="full"] > * { grid-column: full; }
+}
+
+/* Article layouts: full-bleed page hero followed by normal prose. */
+.article-page {
+  grid-column: full;
+  display: grid;
+  grid-template-columns: subgrid;
+  row-gap: var(--space-2xl);
+  align-content: start;
+
+  & > .hero { grid-column: full; }
+  & > .prose { grid-column: main; }
 }

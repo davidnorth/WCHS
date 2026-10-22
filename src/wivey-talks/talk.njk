@@ -8,9 +8,8 @@ layout: article.njk
 eleventyComputed:
   title: "{{ event.title }}"
   description: "{{ event.title }} — {{ event.speaker or 'Wivey Talks' }}. {{ event.date }}"
+heroEyebrow: Wivey Talks
 ---
-
-<h1>{{ event.title }}</h1>
 
 <p class="cluster">
   <strong>
@@ -23,6 +22,19 @@ eleventyComputed:
 {% if event.speaker %}
 <p>With <strong>{{ event.speaker }}</strong>{% if event.speakerRole %}, {{ event.speakerRole }}{% endif %}</p>
 {% endif %}
+
+<figure class="talk-hero">
+  <img
+    src="{{ event.image }}-1200.jpg"
+    srcset="{{ event.image }}-400.jpg 400w,
+            {{ event.image }}-800.jpg 800w,
+            {{ event.image }}-1200.jpg 1200w"
+    sizes="(min-width: 72rem) 1080px, 100vw"
+    width="1200" height="900"
+    alt=""
+    loading="eager"
+    fetchpriority="high">
+</figure>
 
 <p>{{ event.description }}</p>
 
