@@ -30,6 +30,19 @@ main {
   &[data-width="full"] > * { grid-column: full; }
 }
 
+/* Contact page: the form on the left, general contact details on the right.
+   Stacks naturally below the form when there is not room for two columns. */
+.contact-page {
+  display: grid;
+  gap: var(--space-xl);
+  align-items: start;
+
+  @media (min-width: 64rem) {
+    grid-template-columns: minmax(0, 38rem) minmax(16rem, 22rem);
+    justify-content: space-between;
+  }
+}
+
 /* Article layouts: full-bleed page hero followed by normal prose. */
 .article-page {
   grid-column: full;

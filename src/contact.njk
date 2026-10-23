@@ -6,68 +6,83 @@ description: Get in touch with the Wiveliscombe Civic Society.
 
 <header class="hero" data-variant="page">
   <h1>Contact us</h1>
-  <p class="lede">Get in touch with the Wiveliscombe Civic Society.</p>
 </header>
 
-<section class="section flow">
-  <p>For general information, please contact our chair, <strong>Pauline Homeshaw</strong> on <a href="tel:01984624564">01984 624564</a> or at <a href="mailto:homeshaw@btopenworld.com">homeshaw@btopenworld.com</a>.</p>
+<section class="section contact-page">
+  <div class="contact-page__form flow">
+    <h2>Enquiry form</h2>
+    <p>For more detailed enquiries, please use this form.</p>
 
-  <h2>Enquiry form</h2>
-  <p>For more detailed enquiries, please use this form.</p>
+    <form
+      class="contact-form"
+      method="POST"
+      action="https://api.web3forms.com/submit"
+    >
+      <input type="hidden" name="access_key" value="{{ forms.web3formsKey }}">
+      <input type="hidden" name="subject" value="Website enquiry">
+      <input type="hidden" name="from_name" value="{{ site.name }}">
+      <input type="hidden" name="redirect" value="{{ site.url }}/contact/thanks/">
 
-  <form
-    class="contact-form"
-    method="POST"
-    action="https://api.web3forms.com/submit"
-  >
-    <input type="hidden" name="access_key" value="{{ forms.web3formsKey }}">
-    <input type="hidden" name="subject" value="Website enquiry">
-    <input type="hidden" name="from_name" value="{{ site.name }}">
-    <input type="hidden" name="redirect" value="{{ site.url }}/contact/thanks/">
+      <p class="visually-hidden">
+        <label for="botcheck">Leave this field empty</label>
+        <input id="botcheck" name="botcheck" type="checkbox" tabindex="-1" autocomplete="off">
+      </p>
 
-    <p class="visually-hidden">
-      <label for="botcheck">Leave this field empty</label>
-      <input id="botcheck" name="botcheck" type="checkbox" tabindex="-1" autocomplete="off">
-    </p>
+      <div class="field">
+        <label for="name">Name</label>
+        <input id="name" name="name" type="text" required autocomplete="name" aria-describedby="name-hint">
+        <small class="field-hint" id="name-hint">Your full name.</small>
+      </div>
 
-    <div class="field">
-      <label for="name">Name</label>
-      <input id="name" name="name" type="text" required autocomplete="name" aria-describedby="name-hint">
-      <small class="field-hint" id="name-hint">Your full name.</small>
-    </div>
+      <div class="field">
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" required autocomplete="email" aria-describedby="email-hint">
+        <small class="field-hint" id="email-hint">We'll never share your address.</small>
+      </div>
 
-    <div class="field">
-      <label for="email">Email</label>
-      <input id="email" name="email" type="email" required autocomplete="email" aria-describedby="email-hint">
-      <small class="field-hint" id="email-hint">We'll never share your address.</small>
-    </div>
+      <div class="field">
+        <label for="enquiry-type">Enquiry type</label>
+        <select id="enquiry-type" name="Enquiry type" required aria-describedby="enquiry-type-hint">
+          <option value="">Select a type&hellip;</option>
+          <option value="Membership enquiry">Membership enquiry</option>
+          <option value="Planning application">Planning application</option>
+          <option value="Wivey Talks">Wivey Talks</option>
+          <option value="General enquiry">General enquiry</option>
+        </select>
+        <small class="field-hint" id="enquiry-type-hint">Choose the topic that best fits.</small>
+      </div>
 
-    <div class="field">
-      <label for="enquiry-type">Enquiry type</label>
-      <select id="enquiry-type" name="Enquiry type" required aria-describedby="enquiry-type-hint">
-        <option value="">Select a type&hellip;</option>
-        <option value="Membership enquiry">Membership enquiry</option>
-        <option value="Planning application">Planning application</option>
-        <option value="Wivey Talks">Wivey Talks</option>
-        <option value="General enquiry">General enquiry</option>
-      </select>
-      <small class="field-hint" id="enquiry-type-hint">Choose the topic that best fits.</small>
-    </div>
+      <div class="field">
+        <label for="message">Message</label>
+        <textarea id="message" name="message" required rows="5" aria-describedby="message-hint"></textarea>
+        <small class="field-hint" id="message-hint">Anything you'd like us to know.</small>
+      </div>
 
-    <div class="field">
-      <label for="message">Message</label>
-      <textarea id="message" name="message" required rows="5" aria-describedby="message-hint"></textarea>
-      <small class="field-hint" id="message-hint">Anything you'd like us to know.</small>
-    </div>
+      <div class="field">
+        <input id="consent" name="consent" type="checkbox" value="yes" required aria-describedby="consent-hint">
+        <label for="consent">I consent to being contacted regarding this enquiry</label>
+        <small class="field-hint" id="consent-hint">Required to submit the form. Read our <a href="/privacy/">privacy notice</a>.</small>
+      </div>
 
-    <div class="field">
-      <input id="consent" name="consent" type="checkbox" value="yes" required aria-describedby="consent-hint">
-      <label for="consent">I consent to being contacted regarding this enquiry</label>
-      <small class="field-hint" id="consent-hint">Required to submit the form. Read our <a href="/privacy/">privacy notice</a>.</small>
-    </div>
+      <div>
+        <button class="button" type="submit">Send message</button>
+      </div>
+    </form>
+  </div>
 
-    <div>
-      <button class="button" type="submit">Send message</button>
-    </div>
-  </form>
+  <aside class="contact-aside" aria-labelledby="general-enquiries">
+    <h2 id="general-enquiries">General enquiries</h2>
+    <p>For general information, please contact our chair, <strong>Pauline Homeshaw</strong>.</p>
+
+    <dl class="contact-aside__details">
+      <div>
+        <dt>Phone</dt>
+        <dd><a href="tel:01984624564">01984 624564</a></dd>
+      </div>
+      <div>
+        <dt>Email</dt>
+        <dd><a href="mailto:homeshaw@btopenworld.com">homeshaw@btopenworld.com</a></dd>
+      </div>
+    </dl>
+  </aside>
 </section>
