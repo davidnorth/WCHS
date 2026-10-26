@@ -45,6 +45,9 @@
   &[data-variant="page"] {
     grid-column: full;
     grid-template-columns: subgrid;
+    /* The base .hero gap would also apply a column-gap between the inherited
+       subgrid tracks, nudging the content off the main column. */
+    column-gap: 0;
     container-type: normal;
     position: relative;
     isolation: isolate;
