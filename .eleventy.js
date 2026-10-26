@@ -1,9 +1,10 @@
 import { mkdirSync, writeFileSync } from "fs";
 import { resolve } from "path";
-import { formatDate } from "./src/_lib/format-date.js";
+import { formatDate, formatTalkDate } from "./src/_lib/format-date.js";
 
 export default function (eleventyConfig) {
   eleventyConfig.addFilter("displayDate", formatDate);
+  eleventyConfig.addFilter("displayTalkDate", formatTalkDate);
 
   eleventyConfig.addCollection("talks", (collectionApi) =>
     collectionApi
