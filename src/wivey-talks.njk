@@ -25,31 +25,27 @@ description: A programme of talks on subjects of general and community interest 
   <h2 class="talk-list-heading">Upcoming Talks</h2>
 
   <div class="talk-list">
-    {% for event in events %}
+    {% for talk in collections.talks %}
     <article>
       <img
-        src="{{ event.image }}-800.jpg"
-        srcset="{{ event.image }}-400.jpg 400w,
-                {{ event.image }}-800.jpg 800w,
-                {{ event.image }}-1200.jpg 1200w"
-        sizes="(min-width: 60rem) 18rem, (min-width: 40rem) 30vw, 100vw"
-        width="1200" height="900"
-        alt=""
+        src="{{ talk.data.image }}-800.jpg"
+        srcset="{{ talk.data.image }}-400.jpg 400w,
+                {{ talk.data.image }}-800.jpg 800w,
+                {{ talk.data.image }}-1200.jpg 1200w"
+        sizes="(min-width: 60rem) 18rem, (min-width: 36rem) 30vw, min(100vw, 20rem)"
+        width="800" height="800"
+        alt="{{ talk.data.imageAlt or '' }}"
         loading="lazy">
       <div>
         <p>
-          <time datetime="{{ event.date }}">
-            {%- set d = event.date.split('-') -%}
-            {{- d[2] }}/{{ d[1] }}/{{ d[0] -}}
-          </time>
-          &mdash; {{ event.time }}
+          <time datetime="{{ talk.data.date }}">{{ talk.data.date | displayDate }}</time>
+          &mdash; {{ talk.data.time }}
         </p>
-        <h3><a href="/wivey-talks/{{ event.id }}/">{{ event.title }}</a></h3>
-        <p>{{ event.description }}</p>
-        {% if event.speaker %}
-        <p>With <strong>{{ event.speaker }}</strong>{% if event.speakerRole %}, {{ event.speakerRole }}{% endif %}</p>
+        <h3><a href="{{ talk.url }}">{{ talk.data.title }}</a></h3>
+        {% if talk.data.byline %}
+        <p>{{ talk.data.byline }}</p>
         {% endif %}
-        <a href="/wivey-talks/{{ event.id }}/">More details</a>
+        <a href="{{ talk.url }}">More details</a>
       </div>
     </article>
     {% endfor %}

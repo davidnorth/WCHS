@@ -1,0 +1,40 @@
+---
+layout: article.njk
+---
+<div class="talk-page">
+  <div class="talk-page__meta">
+    <p class="cluster">
+      <time datetime="{{ date }}"><strong>{{ date | displayDate }}</strong></time>
+      &mdash; {{ time }}
+    </p>
+
+    {% if byline %}
+    <p>{{ byline }}</p>
+    {% endif %}
+  </div>
+
+  <figure class="talk-hero">
+    <img
+      src="{{ image }}-800.jpg"
+      srcset="{{ image }}-400.jpg 400w,
+              {{ image }}-800.jpg 800w,
+              {{ image }}-1200.jpg 1200w"
+      sizes="(min-width: 54rem) 22rem, min(100vw, 28rem)"
+      width="800" height="800"
+      alt="{{ imageAlt or '' }}"
+      loading="eager"
+      fetchpriority="high">
+  </figure>
+
+  <div class="talk-page__body flow">
+    {{ content | safe }}
+
+    <h2>Venue</h2>
+    <p>St Andrew's Church, Wiveliscombe. Doors open 7:00pm, talk starts at 7:30pm.</p>
+
+    <h2>Admission</h2>
+    <p>Free to members. Visitors &pound;5 on the door.</p>
+  </div>
+</div>
+
+<p class="talk-back"><a href="/wivey-talks/">&larr; Back to all talks</a></p>

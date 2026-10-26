@@ -1,7 +1,25 @@
 import { mkdirSync, writeFileSync } from "fs";
 import { resolve } from "path";
+import { formatDate } from "./src/_lib/format-date.js";
 
 export default function (eleventyConfig) {
+  eleventyConfig.addFilter("displayDate", formatDate);
+
+  eleventyConfig.addCollection("talks", (collectionApi) =>
+    collectionApi
+      .getFilteredByTag("talk")
+      .sort((a, b) => new Date(a.data.date) - new Date(b.data.date)),
+  );
+
+  eleventyConfig.addCollection("applications", (collectionApi) =>
+    collectionApi
+      .getFilteredByTag("application")
+      .sort((a, b) => new Date(b.data.submitted) - new Date(a.data.submitted)),
+  );
+
+  // Working notes, not published content.
+  eleventyConfig.ignores.add("src/plan.md");
+
   eleventyConfig.addPassthroughCopy({
     "node_modules/@fontsource/inter/files": "fonts/inter",
   });
@@ -23,6 +41,7 @@ export default function (eleventyConfig) {
 
   eleventyConfig.addWatchTarget("src/css/");
   eleventyConfig.addWatchTarget("src/components/");
+  eleventyConfig.addWatchTarget("src/_lib/");
 
   return {
     dir: {

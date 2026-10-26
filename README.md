@@ -12,11 +12,56 @@ npm run build    # build to dist/
 
 The site builds to `dist/`. CSS is bundled and minified by lightningcss during the build.
 
+## Content
+
+Talks and planning applications are Markdown files with YAML frontmatter, one file per record:
+
+- `src/content/talks/*.md` — the Wivey Talks programme
+- `src/content/applications/*.md` — planning applications
+
+The filename is the URL slug, so keep it stable when editing:
+
+- `src/content/talks/youth-community-power.md` builds to `/wivey-talks/youth-community-power/`
+- `src/content/applications/app-001.md` builds to `/community-matters/app-001/`
+
+Layout, permalink and default metadata live in the sibling `*.11tydata.js` files. Sort order is set in `.eleventy.js`: talks ascend by `date`, applications descend by `submitted`.
+
+### Talks
+
+| Field | Required | Notes |
+| --- | --- | --- |
+| `title` | yes | Page heading and list link text. Quote it if it contains `:` or `#`. |
+| `date` | yes | Quoted ISO date, e.g. `"2026-09-17"`. Unquoted dates are parsed by YAML into `Date` objects. |
+| `time` | yes | Display text, e.g. `"7:30pm"`. |
+| `byline` | yes | Single line shown on the talks list and in meta descriptions, e.g. `"A talk by Nick Harvey, Charity Manager at In the Mix"`. |
+| `image` | yes | Base path under `/images/talks/` for a square image, without the size suffix. |
+| `imageAlt` | no | Alt text for the image. Omit it for decorative images. |
+| `topics` | no | Subject tags. Use `topics`, not `tags`: Eleventy reserves `tags` for collections. |
+
+The Markdown body is the full description shown on the talk page. The layout adds the venue, admission and back-link sections.
+
+### Applications
+
+| Field | Required | Notes |
+| --- | --- | --- |
+| `title` | yes | Page heading and card link text. |
+| `reference` | yes | Planning reference, quoted. |
+| `address` | yes | Site address. |
+| `status` | yes | Display text, e.g. `Under consultation`. |
+| `submitted` | yes | Quoted ISO date, used for ordering. |
+| `summary` | yes | One-line card blurb. |
+| `topics` | no | Subject tags. |
+| `representation` | no | WCHS representation, shown on the card and as a section on the detail page. |
+
+The Markdown body is the application description.
+
 ## Talk images
 
 Talk images are static files in `src/images/talks/`. They are copied to `dist/images/talks/` and served from Cloudflare's CDN alongside the rest of the site.
 
-Each talk in `src/_data/events.js` stores a base image path. The templates request `-400.jpg`, `-800.jpg`, and `-1200.jpg` variants of that path: the talks list uses them as thumbnails, and talk detail pages use them as a large hero image. The checked-in images are brand-coloured placeholders; replace them with real photos using the same filenames, or update the base path in the event data.
+Images are square. Each talk's `image` field stores a base path, and the templates request `-400.jpg`, `-800.jpg`, and `-1200.jpg` variants of that path. The talks list shows them as thumbnails; talk detail pages show them in a right-hand column. Keep the source square (or near square) and centre-crop before exporting, so the `object-fit: cover` rules do not cut off important content.
+
+The checked-in placeholder images are brand-coloured gradients with the society's "W" mark. Replace them with real photos using the same filenames, or update the base path in the talk file. Original artwork can live in the gitignored `art/` directory; export the variants into `src/images/talks/` and commit those.
 
 ## Deployment
 

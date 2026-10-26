@@ -11,9 +11,9 @@
   --flow-space: var(--space-xl);
 }
 
-/* talk-list: a list of talk entries. Each <article> has a thumbnail and a
-   text block. The thumbnail sits above the text on narrow containers and to
-   the right on wide ones. */
+/* talk-list: a list of talk entries. Each <article> has a square thumbnail
+   and a text block. The thumbnail sits above the text on narrow containers
+   and to the right on wide ones. */
 .talk-list {
   display: grid;
   container-type: inline-size;
@@ -32,8 +32,10 @@
 
   & > article > img {
     inline-size: 100%;
+    /* Keep a square thumbnail from dominating a narrow screen. */
+    max-inline-size: 20rem;
     block-size: auto;
-    aspect-ratio: 16 / 9;
+    aspect-ratio: 1 / 1;
     object-fit: cover;
     border-radius: var(--radius-md);
     background: var(--color-surface-light);
@@ -86,7 +88,6 @@
     & > article > img {
       grid-column: 2;
       grid-row: 1;
-      aspect-ratio: 4 / 3;
     }
 
     & > article > div {

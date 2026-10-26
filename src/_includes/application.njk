@@ -1,0 +1,33 @@
+---
+layout: article.njk
+---
+<dl class="application-meta">
+  <dt>Reference</dt>
+  <dd>{{ reference }}</dd>
+
+  <dt>Address</dt>
+  <dd>{{ address }}</dd>
+
+  <dt>Status</dt>
+  <dd>{{ status }}</dd>
+
+  <dt>Submitted</dt>
+  <dd><time datetime="{{ submitted }}">{{ submitted | displayDate }}</time></dd>
+</dl>
+
+{{ content | safe }}
+
+{% if representation %}
+<h2>WCHS Representation</h2>
+<p>{{ representation }}</p>
+{% endif %}
+
+{% if topics %}
+<p class="cluster">
+  {% for topic in topics %}
+  <span class="tag">{{ topic }}</span>
+  {% endfor %}
+</p>
+{% endif %}
+
+<p style="margin-block-start: var(--space-lg);"><a href="/community-matters/">&larr; Back to all applications</a></p>

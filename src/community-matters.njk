@@ -22,22 +22,22 @@ description: Monitoring and commenting on significant planning applications in W
     <h2>Current Applications</h2>
 
     <div class="stack">
-      {% for app in applications %}
+      {% for app in collections.applications %}
       <article class="card">
-        <h3><a href="/community-matters/{{ app.id }}/">{{ app.title }}</a></h3>
-        <p>{{ app.address }}</p>
-        <p>{{ app.description }}</p>
+        <h3><a href="{{ app.url }}">{{ app.data.title }}</a></h3>
+        <p>{{ app.data.address }}</p>
+        <p>{{ app.data.summary }}</p>
         <p class="cluster" style="gap: var(--space-xs);">
-          <strong>Ref:</strong> {{ app.reference }}
+          <strong>Ref:</strong> {{ app.data.reference }}
           <span>&middot;</span>
-          <strong>Status:</strong> {{ app.status }}
+          <strong>Status:</strong> {{ app.data.status }}
         </p>
-        {% if app.representation %}
+        {% if app.data.representation %}
         <p style="font-size: var(--text-sm); border-inline-start: 4px solid var(--color-brand-300); padding-inline-start: var(--space-sm);">
-          <strong>WCHS representation:</strong> {{ app.representation }}
+          <strong>WCHS representation:</strong> {{ app.data.representation }}
         </p>
         {% endif %}
-        <a href="/community-matters/{{ app.id }}/">More details</a>
+        <a href="{{ app.url }}">More details</a>
       </article>
       {% endfor %}
     </div>

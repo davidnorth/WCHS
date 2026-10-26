@@ -54,3 +54,43 @@ main {
   & > .hero { grid-column: full; }
   & > .prose { grid-column: main; }
 }
+
+/* Talk detail: description on the left, square image on the right. The image
+   moves above the description when there is not room for two columns. */
+.talk-page {
+  display: grid;
+  gap: var(--space-lg);
+  align-items: start;
+
+  & > .talk-page__meta {
+    display: grid;
+    gap: var(--space-sm);
+    align-content: start;
+
+    & .cluster {
+      color: var(--color-text-muted);
+      font-size: var(--text-sm);
+    }
+
+    & time {
+      color: var(--color-brand-600);
+      font-weight: 600;
+    }
+  }
+
+  @media (min-width: 54rem) {
+    grid-template-columns: minmax(0, 1fr) minmax(16rem, 22rem);
+    grid-template-areas:
+      "meta figure"
+      "body figure";
+    column-gap: var(--space-xl);
+
+    & > .talk-page__meta { grid-area: meta; }
+    & > .talk-hero { grid-area: figure; }
+    & > .talk-page__body { grid-area: body; }
+  }
+}
+
+.talk-back {
+  --flow-space: var(--space-lg);
+}
