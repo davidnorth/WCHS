@@ -38,8 +38,8 @@ description: A programme of talks on subjects of general and community interest 
         loading="lazy">
       <div>
         <p>
-          <time datetime="{{ talk.data.date }}">{{ talk.data.date | displayDate }}</time>
-          &mdash; {{ talk.data.time }}
+          <time datetime="{{ talk.data.date }}">{{ talk.data.date | displayTalkDate }}</time>
+          {{ talk.data.time }}
         </p>
         <h3><a href="{{ talk.url }}">{{ talk.data.title }}</a></h3>
         {% if talk.data.byline %}

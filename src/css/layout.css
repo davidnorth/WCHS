@@ -67,7 +67,7 @@ main {
     gap: var(--space-sm);
     align-content: start;
 
-    & .cluster {
+    & .talk-date {
       color: var(--color-text-muted);
       font-size: var(--text-sm);
     }

@@ -3,13 +3,13 @@ layout: article.njk
 ---
 <div class="talk-page">
   <div class="talk-page__meta">
-    <p class="cluster">
-      <time datetime="{{ date }}"><strong>{{ date | displayDate }}</strong></time>
-      &mdash; {{ time }}
+    <p class="talk-date">
+      <strong>{{ date | displayTalkDate }}
+        {{ time }}</strong>
     </p>
 
     {% if byline %}
-    <p>{{ byline }}</p>
+    <h3>{{ byline }}</h3>
     {% endif %}
   </div>
 
@@ -29,11 +29,9 @@ layout: article.njk
   <div class="talk-page__body flow">
     {{ content | safe }}
 
-    <h2>Venue</h2>
     <p>St Andrew's Church, Wiveliscombe. Doors open 7:00pm, talk starts at 7:30pm.</p>
 
-    <h2>Admission</h2>
-    <p>Free to members. Visitors &pound;5 on the door.</p>
+    <p>Free to members. Visitors &pound;5 on the door. Refreshments before and after the talk.</p>
   </div>
 </div>
 
