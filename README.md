@@ -55,6 +55,10 @@ The Markdown body is the full description shown on the talk page. The layout add
 
 The Markdown body is the application description.
 
+## Static files
+
+Files that must keep their exact path at the site root, such as search-engine verification files, live in `public/`. The build copies them verbatim to `dist/`.
+
 ## Talk images
 
 Talk images are static files in `src/images/talks/`. They are copied to `dist/images/talks/` and served from Cloudflare's CDN alongside the rest of the site.

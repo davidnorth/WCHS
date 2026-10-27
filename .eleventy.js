@@ -27,6 +27,8 @@ export default function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("src/js");
   eleventyConfig.addPassthroughCopy("src/images");
   eleventyConfig.addPassthroughCopy("src/favicon.svg");
+  // Root-level static files, such as search-engine verification files.
+  eleventyConfig.addPassthroughCopy({ public: "/" });
 
   eleventyConfig.on("eleventy.before", async ({ dir }) => {
     const { bundle } = await import("lightningcss");
