@@ -5,6 +5,7 @@ export default {
   tags: ["application"],
   permalink: "/community-matters/{{ page.fileSlug }}/",
   heroEyebrow: "Community Matters",
+  ogType: "article",
   eleventyComputed: {
     description: (data) =>
       [

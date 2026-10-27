@@ -5,6 +5,9 @@ import { formatDate, formatTalkDate } from "./src/_lib/format-date.js";
 export default function (eleventyConfig) {
   eleventyConfig.addFilter("displayDate", formatDate);
   eleventyConfig.addFilter("displayTalkDate", formatTalkDate);
+  eleventyConfig.addFilter("toJson", (value) =>
+    JSON.stringify(value).replace(/</g, "\\u003c"),
+  );
 
   eleventyConfig.addCollection("talks", (collectionApi) =>
     collectionApi
@@ -20,6 +23,8 @@ export default function (eleventyConfig) {
 
   // Working notes, not published content.
   eleventyConfig.ignores.add("src/plan.md");
+  // Component .html files are copy-paste reference snippets, not pages.
+  eleventyConfig.ignores.add("src/components/**/*.html");
 
   eleventyConfig.addPassthroughCopy({
     "node_modules/@fontsource/inter/files": "fonts/inter",

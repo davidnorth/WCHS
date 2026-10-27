@@ -59,6 +59,18 @@ The Markdown body is the application description.
 
 Files that must keep their exact path at the site root, such as search-engine verification files, live in `public/`. The build copies them verbatim to `dist/`.
 
+## SEO
+
+Search-engine output is generated from `src/_data/site.js` and the base layout, so keep `site.url` correct:
+
+- `src/robots.njk` builds `/robots.txt` and points at the sitemap.
+- `src/sitemap.njk` builds `/sitemap.xml`. It includes every page automatically, apart from anything with `noindex: true` and the 404 page.
+- `src/_includes/base.njk` emits the canonical URL, Open Graph/Twitter tags and the site-wide `Organization` structured data. Talk pages add an `Event` block from `talks.11tydata.js`.
+- Add `noindex: true` to front matter for pages that should stay out of search results, such as thank-you pages and the starter-kit demo pages.
+- `public/img/` holds the default social share image (`og-default.png`, 1200×630) and the logo/touch icons used by structured data.
+
+`npm run build` clears `dist/` first, so pages that are removed or renamed do not leave stale files in the deploy.
+
 ## Talk images
 
 Talk images are static files in `src/images/talks/`. They are copied to `dist/images/talks/` and served from Cloudflare's CDN alongside the rest of the site.
@@ -88,7 +100,7 @@ Without `assets.directory`, Cloudflare infers a directory from the framework pre
    - Root directory: leave blank
 3. Add an environment variable `NODE_VERSION` set to `22`. The repo also contains `.nvmrc`, but the environment variable is what Cloudflare reads first.
 4. Deploy. The site is served at `https://wchs.<account-subdomain>.workers.dev`.
-5. Set `site.url` in `src/_data/site.js` to the production URL (the `workers.dev` address, or the custom domain once it is attached) and redeploy. It builds the canonical, Open Graph and contact form redirect URLs.
+5. Set `site.url` in `src/_data/site.js` to the production URL (the `workers.dev` address, or the custom domain once it is attached) and redeploy. It builds the canonical, Open Graph, structured data, sitemap and contact form redirect URLs.
 
 Pushing to `main` deploys to production. Pushes to other branches create preview deployments with their own URLs, so work in progress does not change the live site.
 
