@@ -7,6 +7,7 @@ export default {
   ogImage: "/img/og-default.png",
   nav: [
     { label: "Home", url: "/" },
+    { label: "About", url: "/about/" },
     { label: "Community Matters", url: "/community-matters/" },
     { label: "Wivey Talks", url: "/wivey-talks/" },
     { label: "Contact", url: "/contact/" },

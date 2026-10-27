@@ -43,6 +43,43 @@ main {
   }
 }
 
+/* About page: introduction text alongside a portrait photo. The photo moves
+   below the text when there is not room for two columns. */
+.about-page {
+  display: grid;
+  gap: var(--space-xl);
+  align-items: start;
+
+  & > .about-page__figure {
+    display: grid;
+    gap: var(--space-xs);
+    max-inline-size: 22rem;
+    margin-inline: auto;
+
+    & img {
+      inline-size: 100%;
+      aspect-ratio: 2 / 3;
+      object-fit: cover;
+      border-radius: var(--radius-md);
+    }
+
+    & figcaption {
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+    }
+  }
+
+  @media (min-width: 64rem) {
+    grid-template-columns: minmax(0, 1fr) minmax(14rem, 20rem);
+    justify-content: space-between;
+
+    & > .about-page__figure {
+      grid-column: 2;
+      grid-row: 1;
+    }
+  }
+}
+
 /* Article layouts: full-bleed page hero followed by normal prose. */
 .article-page {
   grid-column: full;
